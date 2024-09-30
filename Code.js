@@ -4,6 +4,7 @@ function myFunction() {
     var thread = threads[i];
     var subject = thread.getFirstMessageSubject();
     if (subject.startsWith("Kupiłeś i zapłaciłeś:")) {
+      var id = thread.getId()
       var messages = thread.getMessages()
       var firstMessage = messages[0];
       const content = firstMessage.getBody();
@@ -12,13 +13,18 @@ function myFunction() {
 
       var trixUrl = "https://docs.google.com/spreadsheets/d/1sBC7PWM7DkCA4smf11Gg59tWT5R7JRIRaWqqpkIYgw8/edit?gid=0#gid=0"
       var sheetAccountExpenses = getSheet(trixUrl, "Sheet1")
+      var sheetpurchases = getSheet(trixUrl, "Purchases")
       //sheetAccountExpenses.appendRow([content])
 
       // console.log("DDDDD")
       $('[data-cy="offers.table"]').each((index, element) => {
         //console.log(element);
         $(element).find("td").each((index, child) => {
-          console.log("TD:", $(child).text().trim())
+          var purchase = $(child).text().trim()
+          console.log("TD:", purchase)
+          if (purchase) {
+            sheetpurchases.appendRow([id, purchase])
+          }
 
           $(child).find("span").each((index, span) => {
             //console.log("span:", $(span).text().trim())
