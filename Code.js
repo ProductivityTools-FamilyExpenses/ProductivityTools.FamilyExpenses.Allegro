@@ -15,15 +15,19 @@ function myFunction() {
       var sheetAccountExpenses = getSheet(trixUrl, "Sheet1")
       var sheetpurchases = getSheet(trixUrl, "Purchases")
       //sheetAccountExpenses.appendRow([content])
+      let price = $('[data-cy="payment.buyerTotalValue"]').text().trim().replace("zł", "").trim();
+      console.log(price);
+
 
       // console.log("DDDDD")
       $('[data-cy="offers.table"]').each((index, element) => {
         //console.log(element);
+        
         $(element).find("td").each((index, child) => {
           var purchase = $(child).text().trim()
           console.log("TD:", purchase)
           if (purchase) {
-            sheetpurchases.appendRow([id, purchase])
+            sheetpurchases.appendRow([id, price, purchase])
           }
 
           $(child).find("span").each((index, span) => {
