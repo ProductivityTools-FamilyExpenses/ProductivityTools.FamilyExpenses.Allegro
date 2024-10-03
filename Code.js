@@ -15,27 +15,38 @@ function myFunction() {
       var sheetAccountExpenses = getSheet(trixUrl, "Sheet1")
       var sheetpurchases = getSheet(trixUrl, "Purchases")
       //sheetAccountExpenses.appendRow([content])
-      let price = $('[data-cy="payment.buyerTotalValue"]').text().trim().replace("zł", "").trim();
+      let price = $('[data-cy="payment.buyerTotalValue"]').text().trim().replace("zł", "").trim().replace(",", ".");
       console.log(price);
 
 
       // console.log("DDDDD")
       $('[data-cy="offers.table"]').each((index, element) => {
         //console.log(element);
-        
+        var purchaseName = "d";
+        var purchaseCost;
         $(element).find("td").each((index, child) => {
-          var purchase = $(child).text().trim()
+          var purchase = $(child).text().trim().toString()
           console.log("TD:", purchase)
           if (purchase) {
-            sheetpurchases.appendRow([id, price, purchase])
+            console.log("if", purchase, "X", purchase.indexOf("zł"))
+            var indexOfZl = purchase.indexOf("zł")
+            if (indexOfZl > -1) {
+              console.log("first if")
+              purchaseCost = purchase.substring(0, indexOfZl).trim().toString().replace(",", ".")
+
+              var multipleItems = purchase.substring(indexOfZl).replace(/\n/g, "").replace("zł", "").replace("zł", "")
+              var multipleItemsSeparator = multipleItems.indexOf("×")
+              var multipleItemsAmount = multipleItems.substring(0, multipleItemsSeparator).trim()
+              var multipleItemsCost = multipleItems.substring(multipleItemsSeparator + 1).trim().replace(",", ".")
+
+              sheetpurchases.appendRow([id, price, purchaseName, purchaseCost, multipleItems, multipleItemsAmount, multipleItemsCost])
+
+            }
+            else {
+              console.log("else")
+              purchaseName = purchase;
+            }
           }
-
-          $(child).find("span").each((index, span) => {
-            //console.log("span:", $(span).text().trim())
-          })
-
-          //var rowContent = $(child).text().trim()
-          //row.push(rowContent);
         });
 
       })
