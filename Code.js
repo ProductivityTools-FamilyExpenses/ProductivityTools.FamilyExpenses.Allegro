@@ -35,17 +35,14 @@ function processOneMessage(id, firstMessage) {
 
   // console.log("DDDDD")
   $('[data-cy="offers.table"]').each((index, element) => {
-    //console.log(element);
     var purchaseName = "d";
     var purchaseCost;
     $(element).find("td").each((index, child) => {
       var purchase = $(child).text().trim().toString()
       console.log("TD:", purchase)
       if (purchase) {
-        console.log("if", purchase, "X", purchase.indexOf("zł"))
         var indexOfZl = purchase.indexOf("zł")
         if (indexOfZl > -1) {
-          console.log("first if")
           purchaseCost = purchase.substring(0, indexOfZl).trim().toString().replace(",", ".")
 
           var multipleItems = purchase.substring(indexOfZl).replace(/\n/g, "").replace("zł", "").replace("zł", "")
@@ -57,7 +54,6 @@ function processOneMessage(id, firstMessage) {
 
         }
         else {
-          console.log("else")
           purchaseName = purchase;
         }
       }
