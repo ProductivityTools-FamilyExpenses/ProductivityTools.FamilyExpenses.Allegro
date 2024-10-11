@@ -1,21 +1,32 @@
-function myFunction() {
-  var threads = GmailApp.getInboxThreads();
-  var label = GmailApp.getUserLabelByName("FamilyExpenses");
+function processEmails() {
+  var allEmailCount = 3000;
+  while (allEmailCount > 0) {
+    procesRangeEmails(allEmailCount)
+    allEmailCount = allEmailCount - 400;
+  }
+  procesRangeEmails(0);
+}
+
+function procesRangeEmails(startIndex) {
+  var threads = GmailApp.getInboxThreads(startIndex, 500);
+  var labelImported = GmailApp.getUserLabelByName("FE-Imported");
+  var labelProcessed = GmailApp.getUserLabelByName("FE-Processed");
 
   for (var i = threads.length - 1; i > 0; i--) {
     var thread = threads[i];
     var threadLabels = thread.getLabels();
-    if (threadLabels.indexOf(label) == -1) {
-      var subject = thread.getFirstMessageSubject();
-      if (subject.startsWith("Kupiłeś i zapłaciłeś:")) {
-        var id = thread.getId()
-        var messages = thread.getMessages()
-        var firstMessage = messages[0];
-        processOneMessage(id, firstMessage)
-        thread.addLabel(label);
-
-      }
+    //if (threadLabels.indexOf(labelProcessed) == -1) {
+    var subject = thread.getFirstMessageSubject();
+    if (subject.startsWith("Kupiłeś i zapłaciłeś:")) {
+      var id = thread.getId()
+      var messages = thread.getMessages()
+      var firstMessage = messages[0];
+      processOneMessage(id, firstMessage)
+      thread.addLabel(labelImported);
     }
+    //}
+    thread.addLabel(labelProcessed);
+    thread.moveToArchive();
   }
 }
 
@@ -50,7 +61,7 @@ function processOneMessage(id, firstMessage) {
           var multipleItemsAmount = multipleItems.substring(0, multipleItemsSeparator).trim()
           var multipleItemsCost = multipleItems.substring(multipleItemsSeparator + 1).trim().replace(",", ".")
 
-          sheetpurchases.appendRow([date, "'" + id, price, purchaseName, purchaseCost, multipleItems, multipleItemsAmount, multipleItemsCost])
+          sheetpurchases.appendRow([date.toISOString().split('T')[0], "'" + id, price, purchaseName, purchaseCost, multipleItems, multipleItemsAmount, multipleItemsCost])
 
         }
         else {
