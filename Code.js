@@ -37,9 +37,6 @@ function processOneMessage(id, firstMessage) {
   //console.log(content);
 
   var trixUrl = "https://docs.google.com/spreadsheets/d/1sBC7PWM7DkCA4smf11Gg59tWT5R7JRIRaWqqpkIYgw8/edit?gid=0#gid=0"
-  //var sheetAccountExpenses = getSheet(trixUrl, "Sheet1")
-  //sheetAccountExpenses.appendRow([content])
-
   var sheetpurchases = getSheet(trixUrl, "Purchases")
   let price = $('[data-cy="payment.buyerTotalValue"]').text().trim().replace("zł", "").trim().replace(",", ".");
   console.log(price);
@@ -73,8 +70,4 @@ function processOneMessage(id, firstMessage) {
   })
 }
 
-function getSheet(trixUrl, sheetName) {
-  var mainsheet = SpreadsheetApp.openByUrl(trixUrl);
-  var sheet = mainsheet.getSheetByName(sheetName)
-  return sheet;
-}
+
