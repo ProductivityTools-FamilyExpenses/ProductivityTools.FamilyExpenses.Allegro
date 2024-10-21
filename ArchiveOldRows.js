@@ -9,7 +9,7 @@ function archiveElementsRowsOlderThan4Monhts(trixUrl) {
   for (i = data.length - 1; i > 1; i--) {
     var purchaseDate = data[i][0]
     var referencedate = new Date();
-    referencedate.setMonth(referencedate.getMonth() - 4);
+    referencedate.setMonth(referencedate.getMonth() - 2);
     if (purchaseDate < referencedate) {
       var rng = sheetpurchases.getRange(i, 1, 1, 8)
       var rangeArray = rng.getValues();
