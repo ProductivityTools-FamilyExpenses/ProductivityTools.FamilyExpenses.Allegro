@@ -28,7 +28,7 @@ function procesRangeEmails(trixUrl, startIndex) {
   var labelImported = GmailApp.getUserLabelByName("FE-Imported");
   var labelProcessed = GmailApp.getUserLabelByName("FE-Processed");
   var result = false;
-  for (var i = threads.length - 1; i > 0; i--) {
+  for (var i = threads.length - 1; i >= 0; i--) {
     var result = true;
     var thread = threads[i];
     //var threadLabels = thread.getLabels();

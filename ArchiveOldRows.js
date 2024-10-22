@@ -3,7 +3,7 @@ function runner1() {
   archiveElementsRowsOlderThan4Monhts(trixUrl)
 }
 function archiveElementsRowsOlderThan4Monhts(trixUrl) {
-  var sheetpurchases = getSheet(trixUrl, "WorkingCopyPuchases")
+  var sheetpurchases = getSheet(trixUrl, "Purchases")
   var sheetArchive = getSheet(trixUrl, "Archive")
   var data = sheetpurchases.getDataRange().getValues();
   for (i = data.length - 1; i > 1; i--) {
@@ -23,7 +23,7 @@ function archiveElementsRowsOlderThan4Monhts(trixUrl) {
 
 
 function sort(trixUrl) {
-  var sheetpurchases = getSheet(trixUrl, "WorkingCopyPuchases")
+  var sheetpurchases = getSheet(trixUrl, "Purchases")
   var data = sheetpurchases.getRange('Archive!A:H')
   data.sort(1);
 }
