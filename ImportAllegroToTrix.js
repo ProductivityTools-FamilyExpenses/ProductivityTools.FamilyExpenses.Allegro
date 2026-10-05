@@ -34,7 +34,7 @@ function procesRangeEmails(trixUrl, startIndex) {
     //var threadLabels = thread.getLabels();
     //if (threadLabels.indexOf(labelProcessed) == -1) {
     var subject = thread.getFirstMessageSubject();
-    if (subject.startsWith("Kupiłeś i zapłaciłeś:")) {
+    if (subject.startsWith("Kupiłeś i zapłaciłeś:")|| subject.startsWith("Zapłaciłeś")) {
       var id = thread.getId()
       var messages = thread.getMessages()
       var firstMessage = messages[0];
